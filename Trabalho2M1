@@ -1,0 +1,31 @@
+struct ListNode* rotateRight(struct ListNode* head,int k)
+{
+    if(head==NULL) //teste para ver se a lista esta vazia
+    {
+        return NULL; // se sim, retorna nulo
+    }
+    int cnt=1; //variavel para contar elementos da lista
+    struct ListNode* temp=head; //e um ponteiro temporario que aponta para o inicio da lista
+
+    while(temp->next) //nesse while o temporario ira percorrer a lista
+    {
+        cnt++; // incrementando o contador de elementos da lista
+        temp=temp->next;
+    }
+    k %= cnt; //calculamos o resto da divisão de k pelo tamanho da lista
+    if(k==0) // se o resto for 0 retornamos a cabeça
+    {   //isso evita uma rotações desnecessaria
+        return head;
+    }
+    temp->next=head; //essa linha vai transformar a lista em um ciclo, fazendo o campo next do temp apontar para o inicio da lista
+    k=cnt-k-1; //k = numero de passo para chegarmos ao novo ultimo no da lista
+    temp=head;
+    while(k) //aqui vamo andar ate o novo ultimo nó
+    {      
+        temp=temp->next;
+        k--;
+    }
+    head=temp->next; // novo início
+    temp->next=NULL; // novo final da lista
+    return head;
+}
